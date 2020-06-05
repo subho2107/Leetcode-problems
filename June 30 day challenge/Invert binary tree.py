@@ -3,22 +3,6 @@ import sys
 from io import BytesIO, IOBase
 import math
 
-
-def inputIntArray():
-    return list(map(int, input().rstrip().split()))
-
-
-def inputArray():
-    return input().rstrip().split()
-
-
-def inputVars():
-    return map(int, input().rstrip().split())
-
-
-def inputNum():
-    return int(input())
-
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
