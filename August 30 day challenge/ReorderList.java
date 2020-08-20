@@ -21,7 +21,6 @@ public class ReorderList {
         for(int pos = 0; pos < n/2; pos++){
             vals.get(pos).next = vals.get(n-pos-1);
             vals.get(n-pos-1).next = vals.get(pos+1);
-            System.out.println(vals.get(pos).val+" "+ vals.get(pos).next.val+" "+vals.get(pos).next.next.val);
         }
         vals.get(n/2).next = null;
     }
