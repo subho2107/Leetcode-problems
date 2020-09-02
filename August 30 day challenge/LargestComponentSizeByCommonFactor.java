@@ -1,45 +1,68 @@
 import java.io.*;
 import java.util.*;
 
+class DSU {
+    int[] parent;
+
+    DSU(int n) {
+        parent = new int[n];
+        for (int pos = 0; pos < n; pos++) {
+            this.parent[pos] = pos;
+        }
+    }
+
+    int findSet(int vertex) {
+        if (this.parent[vertex] == vertex)
+            return vertex;
+        return parent[vertex] = this.findSet(parent[vertex]);
+    }
+
+    void union(int a, int b) {
+        int parentA = this.findSet(a), parentB = this.findSet(b);
+        parent[parentA] = parentB;
+    }
+}
+
 public class LargestComponentSizeByCommonFactor {
-    ArrayList<ArrayList<Integer>> graph;
-    HashSet<Integer> visited;
-    int cnt;
-    public int gcd(int a, int b) {
-        if (a == 0)
-            return b;
-        return gcd(b % a, a);
-    }
-    public void dfs(int vertex){
-        if (visited.contains(vertex))return;
-        cnt++;
-        visited.add(vertex);
-        for (int nbr:graph.get(vertex)){
-            dfs(nbr);
-        }
-    }
-    public int largestComponentSize(int[] A) {
-        visited = new HashSet<>();
-        graph = new ArrayList<>();
-        for (int pos = 0; pos < A.length; pos++) {
-            graph.add(new ArrayList<>());
-        }
-        int maxGrp = -1;
-        for (int pos = 0; pos < A.length; pos++) {
-            for (int pos2 = pos + 1; pos2 < A.length; pos2++) {
-                if (gcd(A[pos], A[pos2]) != 1) {
-                    graph.get(pos).add(pos2);
-                    graph.get(pos2).add(pos);
+    ArrayList<Integer> getPrimes(int num) {
+        ArrayList<Integer> primes = new ArrayList<>();
+        int dup = num;
+        for (int fact = 2; fact * fact <= dup; fact++) {
+            if (num % fact == 0) {
+                primes.add(fact);
+                while (num % fact == 0) {
+                    num /= fact;
                 }
             }
         }
+        if (num > 1)
+            primes.add(num);
+        return primes;
+    }
+
+    public int largestComponentSize(int[] A) {
+        DSU dsu = new DSU(A.length);
+        HashMap<Integer, ArrayList<Integer>> sets = new HashMap<>();
         for (int pos = 0; pos < A.length; pos++) {
-            cnt = 0;
-            if (visited.contains(pos))continue;
-            dfs(pos);
-            maxGrp = Math.max(maxGrp, cnt);
+            ArrayList<Integer> primes = this.getPrimes(A[pos]);
+            for (Integer fact : primes) {
+                sets.putIfAbsent(fact, new ArrayList<>());
+                sets.get(fact).add(pos);
+            }
         }
-        return maxGrp;
+        for (Integer integer : sets.keySet()) {
+            for (int pos = 0; pos < sets.get(integer).size() - 1; pos++) {
+                dsu.union(sets.get(integer).get(pos), sets.get(integer).get(pos+1));
+            }
+        }
+        HashMap<Integer, Integer>freq = new HashMap<>();
+        int maxSize = -1;
+        for (int pos = 0; pos < A.length; pos++) {
+            int parent = dsu.findSet(pos);
+            freq.put(parent, freq.getOrDefault(parent, 0)+1);
+            maxSize = Math.max(maxSize, freq.get(parent));
+        }
+        return maxSize;
     }
 
     public static void main(String[] args) throws Exception {
