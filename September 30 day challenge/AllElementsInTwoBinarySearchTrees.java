@@ -16,8 +16,7 @@ public class AllElementsInTwoBinarySearchTrees {
         List<Integer> list1 = new ArrayList<>(), list2 = new ArrayList<>();
         dfs(root1, list1);
         dfs(root2, list2);
-        for (int num : list2)
-            list1.add(num);
+        list1.addAll(list2);
         Collections.sort(list1);
         return list1;
     }
