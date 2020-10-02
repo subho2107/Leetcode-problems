@@ -39,4 +39,9 @@ public class LargestNumber {
         }
         return res.toString();
     }
+    public static void main(String[] args) throws Exception {
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+        int [] arr = {824,938,1399,5607,6973,5703,9609,4398,8247};
+        System.out.println(new LargestNumber().largestNumber(arr));
+    }
 }
