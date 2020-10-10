@@ -1,10 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-class RecentCounter {
+class NumberOfRecentCalls {
     int cnt;
     LinkedList<Integer>queryTimes;
-    public RecentCounter() {
+    public NumberOfRecentCalls() {
         cnt = 0;
         queryTimes = new LinkedList<>();
     }
