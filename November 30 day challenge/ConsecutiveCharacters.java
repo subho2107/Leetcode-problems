@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class consecutiveCharacters {
+public class ConsecutiveCharacters {
     public int maxPower(String s) {
         int ans = 0, n = s.length();
         for(int i =0; i < n; i++){
