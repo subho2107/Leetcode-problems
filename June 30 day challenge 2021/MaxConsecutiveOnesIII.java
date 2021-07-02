@@ -42,4 +42,17 @@ public class MaxConsecutiveOnesIII {
         }
         return ans;
     }
+    //using deque
+    public int longestOnes2(int[] nums, int k) {
+        int left = -1, ans = 0;
+        Deque<Integer>queue = new ArrayDeque<>();
+        for(int right = 0; right < nums.length; right++){
+            if(nums[right] == 0)
+                queue.add(right);
+            if(queue.size() > k)
+                left = queue.poll();
+            ans = Math.max(ans, right-left);
+        }
+        return ans;
+    }
 }
