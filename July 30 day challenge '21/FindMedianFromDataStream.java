@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class FindMedianFromDataStream {
+class MedianFinder {
     PriorityQueue<Integer>minHeap, maxHeap;
     public MedianFinder() {
         minHeap = new PriorityQueue<>();
