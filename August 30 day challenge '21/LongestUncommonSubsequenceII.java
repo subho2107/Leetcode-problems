@@ -37,4 +37,31 @@ public class LongestUncommonSubsequenceII {
         }
         return maxLength;
     }
+    public boolean isSubstring(String subs, String word){
+        int j = 0;
+        for(int i = 0; i < word.length(); i++){
+            if(j == subs.length())
+                break;
+            if(word.charAt(i) == subs.charAt(j))
+                j++;
+        }
+        return j == subs.length();
+    }
+    public int findLUSlength2(String[] strs) {
+        int n = strs.length, maxLength = -1;
+        for(int i = 0; i < strs.length; i++){
+            boolean check = false;
+            for(int j = 0; j < strs.length; j++){
+                if(i == j)
+                    continue;
+                if(isSubstring(strs[i], strs[j])){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check)
+                maxLength = Math.max(maxLength, strs[i].length());
+        }
+        return maxLength;
+    }
 }
