@@ -20,12 +20,15 @@ public class MaximumProfitInJobScheduling {
         int [] dp = new int[n];
         dp[0] = jobs[0].profit;
         for(int i = 1; i < n; i++){
-            int index = -1;
-            for(int j = i-1; j >= 0; j--){
-                if(jobs[j].endTime <= jobs[i].startTime){
-                    index = j;
-                    break;
+            int low = 0, high = i-1, index = -1;
+            while (low <= high){
+                int mid = (low+high)/2;
+                if (jobs[mid].endTime <= jobs[i].startTime) {
+                    low = mid+1;
+                    index = mid;
                 }
+                else
+                    high = mid-1;
             }
             int currProfit = jobs[i].profit;
             if(index != -1)
