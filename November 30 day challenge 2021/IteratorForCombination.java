@@ -2,13 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class IteratorForCombination {
-    public static void main(String[] args) throws Exception {
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int t = Integer.parseInt(buffer.readLine());
-        while (t-- > 0) {
-
+    class CombinationIterator {
+        private List<String>combinations;
+        private int pos;
+        private int size;
+        public CombinationIterator(String characters, int combinationLength) {
+            combinations = new ArrayList<>();
+            pos = 0;
+            char [] arr = characters.toCharArray();
+            int n = characters.length();
+            for(int i = (1<<n)-1; i >= 0; i--){
+                int bitCnt = 0, dup = i;
+                StringBuilder sb = new StringBuilder();
+                for(int j = n-1; j >= 0; j--){
+                    if((i&(1<<j)) > 0){
+                        bitCnt++;
+                        sb.append(arr[n-j-1]);
+                    }
+                }
+                if(bitCnt == combinationLength)
+                    combinations.add(sb.toString());
+            }
+            size = combinations.size();
         }
-        System.out.println(sb);
+
+        public String next() {
+            return combinations.get(pos++);
+        }
+
+        public boolean hasNext() {
+            return pos < size;
+        }
     }
 }
