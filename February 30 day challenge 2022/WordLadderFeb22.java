@@ -36,7 +36,6 @@ public class WordLadderFeb22 {
         int ans = 1;
         boolean check = false;
         while(!queue.isEmpty()){
-            check = false;
             for(int i = queue.size(); i > 0; i--){
                 String curr = queue.poll();
                 if(foundInCurrChild(curr, queue, prevUsed, wordList, endWord)){
